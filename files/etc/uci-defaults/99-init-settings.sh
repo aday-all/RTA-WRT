@@ -8,7 +8,7 @@ echo "###############################################"
 echo "Processor: $(ubus call system board | grep '\"system\"' | sed 's/ \+/ /g' | awk -F'\"' '{print $4}')"
 echo "Device Model: $(ubus call system board | grep '\"model\"' | sed 's/ \+/ /g' | awk -F'\"' '{print $4}')"
 echo "Device Board: $(ubus call system board | grep '\"board_name\"' | sed 's/ \+/ /g' | awk -F'\"' '{print $4}')"
-sed -i "s#_('Firmware Version'),(L.isObject(boardinfo.release)?boardinfo.release.description+' / ':'')+(luciversion||''),#_('Firmware Version'),(L.isObject(boardinfo.release)?boardinfo.release.description+' build by RTA-WRT [Ouc3kNF6]':''),#g" /www/luci-static/resources/view/status/include/10_system.js
+sed -i "s#_('Firmware Version'),(L.isObject(boardinfo.release)?boardinfo.release.description+' / ':'')+(luciversion||''),#_('Firmware Version'),(L.isObject(boardinfo.release)?boardinfo.release.description+' build by OpenWrt [Ouc3kNF6]':''),#g" /www/luci-static/resources/view/status/include/10_system.js
 if grep -q "ImmortalWrt" /etc/openwrt_release; then
   sed -i "s/\(DISTRIB_DESCRIPTION='ImmortalWrt [0-9]*\.[0-9]*\.[0-9]*\).*'/\1'/g" /etc/openwrt_release
   echo Branch version: "$(grep 'DISTRIB_DESCRIPTION=' /etc/openwrt_release | awk -F"'" '{print $2}')"
@@ -20,11 +20,11 @@ echo "Tunnel Installed: $(opkg list-installed | grep -e luci-app-openclash -e lu
 echo "###############################################"
 
 # Set login root password
-(echo "RTAWRT"; sleep 1; echo "RTAWRT") | passwd > /dev/null
+(echo "root"; sleep 1; echo "root") | passwd > /dev/null
 
 # Set hostname and Timezone to Asia/Jakarta
 echo "Setup NTP Server and Time Zone to Asia/Jakarta"
-uci set system.@system[0].hostname='RTA-WRT'
+uci set system.@system[0].hostname='OpenWrt'
 uci set system.@system[0].timezone='WIB-7'
 uci set system.@system[0].zonename='Asia/Jakarta'
 uci -q delete system.ntp.server
@@ -40,17 +40,11 @@ uci set network.lan.device='br-lan'
 uci set network.lan.proto='static'
 uci set network.lan.ipaddr="192.168.1.1"
 uci set network.lan.netmask='255.255.255.0'
-uci set network.wan=interface 
-uci set network.wan.proto='modemmanager'
-uci set network.wan.device='/sys/devices/platform/scb/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb2/2-1'
-uci set network.wan.apn='internet'
-uci set network.wan.auth='none'
-uci set network.wan.iptype='ipv4'
 uci set network.tethering=interface
 uci set network.tethering.proto='dhcp'
 uci set network.tethering.device='usb0'
 uci commit network
-uci set firewall.@zone[1].network='wan tethering'
+uci set firewall.@zone[1].network='tethering'
 uci commit firewall
 
 # configure ipv6
@@ -65,12 +59,12 @@ uci set wireless.@wifi-device[0].disabled='0'
 uci set wireless.@wifi-iface[0].disabled='0'
 uci set wireless.@wifi-device[0].country='ID'
 if grep -q "Raspberry Pi 4\|Raspberry Pi 3" /proc/cpuinfo; then
-  uci set wireless.@wifi-iface[0].ssid='RTA-WRT_5g'
+  uci set wireless.@wifi-iface[0].ssid='Openwrt_5g'
   uci set wireless.@wifi-device[0].channel='149'
   uci set wireless.radio0.htmode='HT40'
   uci set wireless.radio0.band='5g'
 else
-  uci set wireless.@wifi-iface[0].ssid='RTA-WRT_2g'
+  uci set wireless.@wifi-iface[0].ssid='OpenWrt_2g'
   uci set wireless.@wifi-device[0].channel='1'
   uci set wireless.@wifi-device[0].band='2g'
 fi
@@ -93,13 +87,13 @@ else
 fi
 
 # custom repo and Disable opkg signature check
-echo "Setup custom Repo By kiddin9"
-sed -i 's/option check_signature/# option check_signature/g' /etc/opkg.conf
-echo "src/gz custom_arch https://dl.openwrt.ai/latest/packages/$(grep "OPENWRT_ARCH" /etc/os-release | awk -F '"' '{print $2}')/kiddin9" >> /etc/opkg/customfeeds.conf
+#echo "Setup custom Repo By kiddin9"
+#sed -i 's/option check_signature/# option check_signature/g' /etc/opkg.conf
+#echo "src/gz custom_arch https://dl.openwrt.ai/latest/packages/$(grep "OPENWRT_ARCH" /etc/os-release | awk -F '"' '{print $2}')/kiddin9" >> /etc/opkg/customfeeds.conf
 
 # set argon as default theme
-echo "Setup Default Theme"
-uci set luci.main.mediaurlbase='/luci-static/argon' && uci commit
+#echo "Setup Default Theme"
+#uci set luci.main.mediaurlbase='/luci-static/argon' && uci commit
 
 echo "Setup misc settings"
 # remove login password required when accessing terminal
@@ -117,11 +111,11 @@ uci set xmm-modem.@xmm-modem[0].enable='0'
 uci commit
 
 # setup nlbwmon database dir
-uci set nlbwmon.@nlbwmon[0].database_directory='/etc/nlbwmon'
-uci set nlbwmon.@nlbwmon[0].commit_interval='3h'
-uci set nlbwmon.@nlbwmon[0].refresh_interval='60s'
-uci commit nlbwmon
-bash /etc/init.d/nlbwmon restart
+#uci set nlbwmon.@nlbwmon[0].database_directory='/etc/nlbwmon'
+#uci set nlbwmon.@nlbwmon[0].commit_interval='3h'
+#uci set nlbwmon.@nlbwmon[0].refresh_interval='60s'
+#uci commit nlbwmon
+#bash /etc/init.d/nlbwmon restart
 
 # setup auto vnstat database backup
 sed -i 's/;DatabaseDir "\/var\/lib\/vnstat"/DatabaseDir "\/etc\/vnstat"/' /etc/vnstat.conf
@@ -133,8 +127,8 @@ bash /etc/init.d/vnstat_backup enable
 sed -i 's/services/modem/g' /usr/share/luci/menu.d/luci-app-lite-watchdog.json
 
 # setup misc settings
-sed -i 's/\[ -f \/etc\/banner \] && cat \/etc\/banner/#&/' /etc/profile
-sed -i 's/\[ -n "$FAILSAFE" \] && cat \/etc\/banner.failsafe/& || \/usr\/bin\/neofetch/' /etc/profile
+#sed -i 's/\[ -f \/etc\/banner \] && cat \/etc\/banner/#&/' /etc/profile
+#sed -i 's/\[ -n "$FAILSAFE" \] && cat \/etc\/banner.failsafe/& || \/usr\/bin\/neofetch/' /etc/profile
 chmod +x /root/fix-tinyfm.sh && bash /root/fix-tinyfm.sh
 chmod +x /sbin/sync_time.sh
 chmod +x /sbin/free.sh
