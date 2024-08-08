@@ -24,7 +24,7 @@ else
 fi
 
 # Modem Tools
-PACKAGES+=" modeminfo luci-app-modeminfo atinout modemband luci-app-modemband luci-app-mmconfig sms-tool luci-app-sms-tool-js luci-app-lite-watchdog luci-app-3ginfo-lite picocom minicom"
+#PACKAGES+=" modeminfo luci-app-modeminfo atinout modemband luci-app-modemband luci-app-mmconfig sms-tool luci-app-sms-tool-js luci-app-lite-watchdog luci-app-3ginfo-lite picocom minicom"
 
 # Tunnel option
 OPENCLASH=" coreutils-nohup bash dnsmasq-full curl ca-certificates ipset ip-full libcap libcap-bin ruby ruby-yaml kmod-tun kmod-inet-diag unzip kmod-nft-tproxy luci-compat luci luci-base luci-app-openclash"
@@ -39,23 +39,29 @@ elif [ "$2" == "openclash-passwall" ]; then
 fi
 
 # NAS and Hard disk tools
-PACKAGES+=" luci-app-diskman luci-app-disks-info smartmontools kmod-usb-storage kmod-usb-storage-uas ntfs-3g"
+#PACKAGES+=" luci-app-diskman luci-app-disks-info smartmontools kmod-usb-storage kmod-usb-storage-uas ntfs-3g"
+PACKAGES+=" luci-app-diskman kmod-usb-storage kmod-usb-storage-uas ntfs-3g"
 # PACKAGES+=" luci-app-tinyfm"
 PACKAGES+=" luci-app-tinyfilemanager"
 
-PACKAGES+=" quickstart luci-app-quickstart"
+#PACKAGES+=" quickstart luci-app-quickstart"
 
 # Bandwidth And Network Monitoring
-PACKAGES+=" internet-detector luci-app-internet-detector internet-detector-mod-modem-restart nlbwmon luci-app-nlbwmon vnstat2 vnstati2 luci-app-vnstat2 luci-app-netmonitor"
+#PACKAGES+=" internet-detector luci-app-internet-detector internet-detector-mod-modem-restart nlbwmon luci-app-nlbwmon vnstat2 vnstati2 luci-app-vnstat2 luci-app-netmonitor"
+PACKAGES+=" internet-detector luci-app-internet-detector internet-detector-mod-modem-restart vnstat2 vnstati2 luci-app-vnstat2"
 
 # Speedtest
-PACKAGES+=" librespeed-go python3-speedtest-cli iperf3 luci-app-netspeedtest"
+#PACKAGES+=" librespeed-go python3-speedtest-cli iperf3 luci-app-netspeedtest"
+PACKAGES+=" iperf3"
 
 # Base64 Encode Decode
-PACKAGES+=" luci-app-base64"
+#PACKAGES+=" luci-app-base64"
+
+# Material Theme
+PACKAGES+=" luci-theme-material"
 
 # Argon Theme
-PACKAGES+=" luci-theme-argon luci-app-argon-config"
+#PACKAGES+=" luci-theme-argon luci-app-argon-config"
 
 # Alpha Theme
 # PACKAGES+=" luci-theme-alpha luci-app-alpha-config"
@@ -71,7 +77,8 @@ PACKAGES+=" perl perlbase-essential perlbase-utf8 perlbase-time perlbase-xsloade
 # Misc and some custom .ipk files
 misc=""
 if [ "${RELEASE_BRANCH%:*}" == "openwrt" ]; then
-    misc+=" luci-app-temp-status luci-app-cpu-status-mini"
+    #misc+=" luci-app-temp-status luci-app-cpu-status-mini"
+    misc+=" luci-app-temp-status"
 elif [ "${RELEASE_BRANCH%:*}" == "immortalwrt" ]; then
     misc+=" "
 fi
@@ -93,7 +100,8 @@ if [ "$TYPE" == "AMLOGIC" ]; then
     EXCLUDED+=" -procd-ujail"
 fi
 
-PACKAGES+=" $misc zram-swap adb parted losetup resize2fs luci luci-ssl block-mount luci-app-poweroff luci-app-log luci-app-ramfree htop bash curl wget wget-ssl tar unzip unrar gzip jq luci-app-ttyd nano httping screen openssh-sftp-server"
+#PACKAGES+=" $misc zram-swap adb parted losetup resize2fs luci luci-ssl block-mount luci-app-poweroff luci-app-log luci-app-ramfree htop bash curl wget wget-ssl tar unzip unrar gzip jq luci-app-ttyd nano httping screen openssh-sftp-server"
+PACKAGES+=" $misc zram-swap adb parted losetup resize2fs luci luci-ssl block-mount luci-app-ramfree htop bash curl wget wget-ssl tar unzip unrar gzip jq luci-app-ttyd nano httping screen openssh-sftp-server"
 
 # Exclude package (must use - before packages name)
 EXCLUDED=""
