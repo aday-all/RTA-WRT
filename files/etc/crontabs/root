@@ -1,0 +1,4 @@
+# Use crontab.guru to set crontab schedule spesific time
+
+0 * * * * /sbin/free.sh >/dev/null 2>&1
+0 */3 * * * /etc/init.d/vnstat_backup backup
