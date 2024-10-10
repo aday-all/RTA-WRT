@@ -1,0 +1,34 @@
+proxy-groups:
+  - name: SERVER-BROWSING
+    type: select
+    disable-udp: false
+    use:
+      - PP-Browsing
+  - name: SERVER-SOSMED
+    type: select
+    disable-udp: false
+    use:
+      - PP-Browsing
+  - name: SERVER-SPEEDTEST
+    type: select
+    disable-udp: false
+    use:
+      - PP-Browsing
+proxy-providers:
+  PP-Browsing:
+    type: file
+    path: "./proxy_provider/pp-browsing.yaml"
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 180
+rules:
+- AND,((NETWORK,udp),(OR,((DST-PORT,443),(GEOSITE,youtube)))),REJECT
+- GEOSITE,rule-sosmed,SERVER-SOSMED
+- GEOSITE,rule-streaming,SERVER-SOSMED
+- GEOIP,facebook,SERVER-SOSMED
+- GEOIP,netflix,SERVER-SOSMED
+- GEOIP,telegram,SERVER-SOSMED
+- GEOIP,twitter,SERVER-SOSMED
+- GEOSITE,rule-speedtest,SERVER-SPEEDTEST
+- MATCH,SERVER-BROWSING

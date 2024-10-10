@@ -1,0 +1,164 @@
+proxies:
+  - name: Akamai(ID)
+    server: xv.aday.my.id
+    port: 443
+    type: vless
+    uuid: c7017b63-442c-4053-ad92-b387a0347bab
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: vless.aday.my.id
+    network: ws
+    ws-opts:
+      path: /akamaiID
+      headers:
+        Host: vless.aday.my.id
+    udp: true
+
+  - name: Google(ID)
+    server: xv.aday.my.id
+    port: 443
+    type: vless
+    uuid: c7017b63-442c-4053-ad92-b387a0347bab
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: vless.aday.my.id
+    network: ws
+    ws-opts:
+      path: /googleID
+      headers:
+        Host: vless.aday.my.id
+    udp: true
+
+  - name: HOSTKEY(ID)
+    server: xv.aday.my.id
+    port: 443
+    type: vless
+    uuid: c7017b63-442c-4053-ad92-b387a0347bab
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: vless.aday.my.id
+    network: ws
+    ws-opts:
+      path: /hostkeyID
+      headers:
+        Host: vless.aday.my.id
+    udp: true
+
+###################################
+
+  - name: Akamai(ID)dev
+    server: xv.aday.my.id
+    port: 443
+    type: vless
+    uuid: 62c679cc-50e0-486e-83e9-5923b15c9906
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: vless.xray-all.workers.dev
+    network: ws
+    ws-opts:
+      path: /akamaiID
+      headers:
+        Host: vless.xray-all.workers.dev
+    udp: true
+
+  - name: Google(ID)dev
+    server: xv.aday.my.id
+    port: 443
+    type: vless
+    uuid: 62c679cc-50e0-486e-83e9-5923b15c9906
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: vless.xray-all.workers.dev
+    network: ws
+    ws-opts:
+      path: /googleID
+      headers:
+        Host: vless.xray-all.workers.dev
+    udp: true
+
+  - name: HOSTKEY(ID)dev
+    server: xv.aday.my.id
+    port: 443
+    type: vless
+    uuid: 62c679cc-50e0-486e-83e9-5923b15c9906
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: vless.xray-all.workers.dev
+    network: ws
+    ws-opts:
+      path: /hostkeyID
+      headers:
+        Host: vless.xray-all.workers.dev
+    udp: true
+
+###################################
+
+  - name: Akamai Technologies, Inc. (ID)
+    server: vless.xray-all.workers.dev
+    port: 443
+    type: vless
+    uuid: 3b862066-6fb9-4db1-a96a-c92beecaaa15
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: xray.xrayall.workers.dev
+    network: ws
+    ws-opts:
+      path: /vless
+      headers:
+        Host: xray.xrayall.workers.dev
+    udp: true
+
+###################################
+
+  - name: testt
+    server: quiz.int.vidio.com.adays-wildcard-ssl-web.vip-kitu.my.id
+    port: 443
+    type: vless
+    uuid: c7017b63-442c-4053-ad92-b387a0347bab
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: vless.aday.my.id
+    network: ws
+    ws-opts:
+      path: /akamaiID
+      headers:
+        Host: vless.aday.my.id
+    udp: true
+
+  - name: whyvpn
+    server: xv.aday.my.id
+    port: 443
+    type: trojan
+    password: 58ddd890-98a5-420a-b374-2043536759e1
+    skip-cert-verify: true
+    sni: id1.kitu.my.id
+    network: ws
+    ws-opts:
+      path: /trojan-ws/
+      headers:
+        Host: id1.kitu.my.id
+    udp: true
+
+  - name: iflixxxxx
+    server: 178.128.97.138
+    port: 443
+    type: vless
+    uuid: 3f24dede-855d-4d13-b2fd-ed303b652f75
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    servername: live.iflix.com
+    network: ws
+    ws-opts:
+      path: /VLESS
+      headers:
+        Host: live.iflix.com
+    udp: true
